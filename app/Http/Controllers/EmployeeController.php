@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Employee;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+
+
 class EmployeeController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class EmployeeController extends Controller
     public function index()
     {
         // Get employees
-        $employees = Employee::paginate(10);
+        $employees = Employee::all();
 
         return view('employees',compact('employees'));
 
@@ -52,30 +54,20 @@ class EmployeeController extends Controller
         ]);
 
         $data = json_decode($response->getBody()->getContents(), true);
+        $timestamp = Carbon::now()->toDateTimeString();
 
-        //insert data in Database
-        $items = $data['data'];
-        foreach($items as $item) {
+        $prepared = collect($data['data'])->map(function($item) use ($timestamp) {
             $employee = new Employee();
-            $employee->employee_id = $item['id'];
-            $employee->date_of_birth = $item['date_of_birth'];
-            $employee->image = $item['image'];
-            $employee->email = $item['email'];
-            $employee->first_name = $item['first_name'];
-            $employee->last_name = $item['last_name'];
-            $employee->title = $item['title'];
-            $employee->address = $item['address'];
-            $employee->country = $item['country'];
-            $employee->bio = $item['bio'];
-            $employee->rating = $item['rating'];
-            $user = Employee::where('email', '=', $employee->email)->first();
-            if ($user === null) {
-                // user doesn't exist
-                $employee->save();
+            $employee->employee_id = $item['id'] ;
+            $item['created_at'] = $timestamp;
+            $item['updated_at'] = $timestamp;
+            return $item;
+        });
+$cicka = Employee::first();
+dd($cicka);
+//        $leads = Employee::where('email')->get();
+//        dd($leads);
+        Employee::insert($prepared->toArray());
 
-            }else{
-                echo ' postoj kopileto';
-            }
-        }
     }
 }
