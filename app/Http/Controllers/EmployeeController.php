@@ -19,8 +19,7 @@ class EmployeeController extends Controller
     public function index()
     {
         // Get employees
-        $employees = Employee::all();
-
+        $employees = Employee::paginate(5);
         return view('employees',compact('employees'));
 
     }
@@ -63,11 +62,14 @@ class EmployeeController extends Controller
             $item['updated_at'] = $timestamp;
             return $item;
         });
-$cicka = Employee::first();
-dd($cicka);
-//        $leads = Employee::where('email')->get();
-//        dd($leads);
+
+        //insert in database
         Employee::insert($prepared->toArray());
 
+        return  redirect('/employees');
+    }
+
+    public function home(){
+        return view('home');
     }
 }
