@@ -24,12 +24,6 @@ class EmployeesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(EmployeesClient::class, function(){
-            $config = $this->app->get('config')['employees'];
 
-            return new EmployeesClient([
-                'base_uri' => $config['base_uri']
-            ]);
-        });
     }
 }

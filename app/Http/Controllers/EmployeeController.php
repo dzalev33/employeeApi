@@ -16,8 +16,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employees = $this->employeesService->getData();
-        return $employees;
+        return $this->employeesService->insertData();
     }
 }
 
