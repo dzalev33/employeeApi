@@ -32,7 +32,7 @@ class EmployeesService {
 
         //get token
 
-        $response = $this->client->request('POST', 'http://technical_test.client.cosmicdevelopment.com/api/token/',[
+        $response = $this->client->request('POST', 'api/token/',[
             'json' => $devCredentials
         ]);
         $getToken = json_decode($response->getBody()->getContents(), true);
@@ -47,7 +47,7 @@ class EmployeesService {
 
         //get data from API
 
-        $response = $this->client->request('GET', 'http://technical_test.client.cosmicdevelopment.com/api/employee/list/', [
+        $response = $this->client->request('GET', 'api/employee/list/', [
             'headers' => [
                 'Access-Token' => $token,
                 'Content-Type' => 'application/json',
