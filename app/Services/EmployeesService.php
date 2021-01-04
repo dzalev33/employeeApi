@@ -14,10 +14,9 @@ class EmployeesService {
      * @var EmployeesClient
      */
     private $client;
-    public function __construct(EmployeesClient $client){
-
+    public function __construct(EmployeesClient $client)
+    {
         $this->client = $client;
-
     }
 
     //get token
@@ -54,8 +53,8 @@ class EmployeesService {
     }
 
     //prepare collection
-    public function preparedData(){
-
+    public function preparedData()
+    {
         $data = $this->getData();
         $timestamp = Carbon::now()->toDateTimeString();
         $prepared = collect($data['data'])->map(function($item) use ($timestamp) {
@@ -70,7 +69,6 @@ class EmployeesService {
     }
 
     //check if data exists in database
-
     public function checkIfDataExistsInDatabase(){
         $data = $this->getData();
         $prepared = collect($data['data'])->map(function($item){
@@ -90,7 +88,6 @@ class EmployeesService {
     public function insertData()
     {
         $prepared =  $this->preparedData();
-
         if (!$this->checkIfDataExistsInDatabase()){
             Employee::insert($prepared->toArray());
         }
@@ -99,8 +96,7 @@ class EmployeesService {
     //get data from database
     public function getDataFromDatabase()
     {
-        return Employee::all();
+             $this->insertData();
+             return Employee::all();
     }
-
-
 }
