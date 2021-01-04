@@ -65,7 +65,7 @@ class EmployeesService {
             return $item;
         });
 
-
+dd($prepared->toArray());
         //insert in database
         Employee::insert($prepared->toArray());
 
