@@ -1,6 +1,5 @@
 <?php
-
-return [
+return[
     'base_uri' => env('EMPLOYEES_API_BASE_URI', 'http://technical_test.client.cosmicdevelopment.com/'),
     'grant_type' => env('API_GRANT_TYPE', 'password'),
     'client_id' => env('API_CLIENT_ID', '6779ef20e75817b79601'),
