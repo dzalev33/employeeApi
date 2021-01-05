@@ -25,8 +25,11 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     @foreach($employees as $item)
+
                         <tr>
+
                             <td> {{ $item->title  }}</td>
                             <td> {{ $item->first_name  }}</td>
                             <td> {{ $item->last_name  }}</td>
@@ -37,7 +40,10 @@
                             <td> {{ $item->image  }}</td>
                             <td> {{ $item->bio  }}</td>
                             <td> {{ $item->rating  }}</td>
-                            <td> {{ $item->id  }}</td>
+
+                            <td> {{ $item->id }} </td>
+
+
                         </tr>
                     @endforeach
                     </tbody>
