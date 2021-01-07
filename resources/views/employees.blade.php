@@ -1,53 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container pt-5">
-
-        <div class="row align-center">
-            <h1>Employee List</h1>
-        </div>
+    <div class="container">
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Date of Birth</th>
-                        <th scope="col">address</th>
-                        <th scope="col">country</th>
-                        <th scope="col">image</th>
-                        <th scope="col">bio</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Employee ID</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div class="col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading mb-4"><h1>List of Employees</h1></div>
+                    <hr>
 
-                    @foreach($employees as $item)
+                    <div class="panel-body">
+                        @foreach($employees as $item)
+                            <article>
+                                <h4>
+                                    {{ $item->title  }} {{ $item->first_name  }} {{ $item->last_name  }}
+                                </h4>
+                                <div class="body">
+                                    <p><b>Email:</b> {{ $item->email  }}</p>
+                                    <p> <b>Date of Birth:</b> {{ $item->date_of_birth  }}</p>
+                                    <p> <b>Address: </b>{{ $item->address  }}</p>
+                                    <p> <b>Country:</b> {{ $item->country  }}</p>
+                                    <p> <b>Image Url:</b> {{ $item->image  }}</p>
+                                    <p> <b>Bio:</b> {{ $item->bio  }}</p>
+                                    <p> <b>Rating:</b> {{ $item->rating  }}</p>
+                                    <p> <b>Id:</b> {{ $item->id }}</p>
 
-                        <tr>
+                                </div>
+                            </article>
 
-                            <td> {{ $item->title  }}</td>
-                            <td> {{ $item->first_name  }}</td>
-                            <td> {{ $item->last_name  }}</td>
-                            <td> {{ $item->email  }}</td>
-                            <td> {{ $item->date_of_birth  }}</td>
-                            <td> {{ $item->address  }}</td>
-                            <td> {{ $item->country  }}</td>
-                            <td> {{ $item->image  }}</td>
-                            <td> {{ $item->bio  }}</td>
-                            <td> {{ $item->rating  }}</td>
+                            <hr>
+                        @endforeach
 
-                            <td> {{ $item->id }} </td>
-
-
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -12,7 +12,3 @@
 */
 
 Route::get('/', 'EmployeeController@index');
-Route::get('employees', 'EmployeeController@index');
-
-Route::get('data','EmployeeController@getData');
-Route::get('token','EmployeeController@getToken');

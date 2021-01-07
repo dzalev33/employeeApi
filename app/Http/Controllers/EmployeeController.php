@@ -17,8 +17,6 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees =   $this->employeesService->getDataFromDatabase();
-
-
         return view('employees',compact('employees'));
     }
 }
