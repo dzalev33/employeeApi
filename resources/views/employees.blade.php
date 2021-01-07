@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -7,7 +6,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading mb-4"><h1>List of Employees</h1></div>
                     <hr>
-
                     <div class="panel-body">
                         @foreach($employees as $item)
                             <article>
@@ -23,10 +21,8 @@
                                     <p> <b>Bio:</b> {{ $item->bio  }}</p>
                                     <p> <b>Rating:</b> {{ $item->rating  }}</p>
                                     <p> <b>Id:</b> {{ $item->id }}</p>
-
                                 </div>
                             </article>
-
                             <hr>
                         @endforeach
 
