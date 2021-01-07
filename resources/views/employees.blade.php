@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container pt-5">
-        <a class="btn btn-dark" href="/">Back</a>
+
         <div class="row align-center">
             <h1>Employee List</h1>
         </div>

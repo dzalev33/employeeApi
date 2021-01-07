@@ -7,34 +7,43 @@ use Carbon\Carbon;
 use App\Http\Clients\EmployeesClient;
 
 
-class EmployeesService {
+class EmployeesService
+{
 
     /**
      * EmployeesService constructor.
      * @var EmployeesClient
      */
     private $client;
+
     public function __construct(EmployeesClient $client)
     {
         $this->client = $client;
     }
 
-    //get token
-    public function getToken()
-    {
+    public function requestToken(){
         $devCredentials = config('employees');
-        $response = $this->client->request('POST', 'api/token/',[
+        $response = $this->client->request('POST', 'api/token/', [
             'json' => $devCredentials
         ]);
+
+        return $response;
+    }
+
+    //get token value
+    public function getToken()
+    {
+        $response = $this->requestToken();
         $getToken = json_decode($response->getBody()->getContents(), true);
         $token = $getToken['data']['access_token'];
+
         return $token;
     }
 
     //get data from API
     public function getData()
     {
-       $token = $this->getToken();
+        $token = $this->getToken();
         $response = $this->client->request('GET', 'api/employee/list/', [
             'headers' => [
                 'Access-Token' => $token,
@@ -42,7 +51,6 @@ class EmployeesService {
             ],
         ]);
         $data = json_decode($response->getBody()->getContents(), true);
-
         return $data;
     }
 
@@ -51,9 +59,9 @@ class EmployeesService {
     {
         $data = $this->getData();
         $timestamp = Carbon::now()->toDateTimeString();
-        $prepared = collect($data['data'])->map(function($item) use ($timestamp) {
+        $prepared = collect($data['data'])->map(function ($item) use ($timestamp) {
             $employee = new Employee();
-            $employee->employee_id = $item['id'] ;
+            $employee->employee_id = $item['id'];
             $item['created_at'] = $timestamp;
             $item['updated_at'] = $timestamp;
             return $item;
@@ -63,17 +71,18 @@ class EmployeesService {
     }
 
     //check if data exists in database
-    public function checkIfDataExistsInDatabase(){
+    public function checkIfDataExistsInDatabase()
+    {
         $data = $this->getData();
-        $prepared = collect($data['data'])->map(function($item){
+        $prepared = collect($data['data'])->map(function ($item) {
             $employee = new Employee();
-            $employee->employee_id = $item['id'] ;
+            $employee->employee_id = $item['id'];
             return $item['id'];
         });
 
         if (Employee::where('id', '=', $prepared)->exists()) {
-           return true;
-        }else{
+            return true;
+        } else {
             return false;
         }
     }
@@ -81,16 +90,16 @@ class EmployeesService {
     //insert data in database
     public function insertData()
     {
-        $prepared =  $this->preparedData();
-        if (!$this->checkIfDataExistsInDatabase()){
+        $prepared = $this->preparedData();
+        if (!$this->checkIfDataExistsInDatabase()) {
             Employee::insert($prepared->toArray());
         }
     }
 
-    //get data from database
+    //insert and get data from database
     public function getDataFromDatabase()
     {
-             $this->insertData();
-             return Employee::all();
+        $this->insertData();
+        return Employee::all();
     }
 }

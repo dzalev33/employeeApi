@@ -3,10 +3,10 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Services\EmployeesService;
-
-
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 Class EmployeesServiceTest extends TestCase
 {
+    use DatabaseMigrations;
 
     /**
      * @var EmployeesService
@@ -22,12 +22,19 @@ Class EmployeesServiceTest extends TestCase
 
     }
 
-    /* @test */
+    /** @test */
+    public function test_a_user_can_view_all_employees()
+    {
+        $response = $this->get('/');
+        $response->assertSee('200');
+    }
+
+    /** @test */
     public function test_FetchingData()
     {
 
         $results = $this->EmployeesService->getData();
-//        $this->assertCount(10,$results);
+        self::assertCount(3,$results);
 
     }
 
